@@ -1,0 +1,105 @@
+$col_count: 12 !default;
+$gutter: 2 !default; // gutter width, in %
+$nesting_level: 1 !default; // number of levels of grid nesting
+$class_prefix: 'grid-' !default; // the grid class prefix
+// create push classes?
+$create_push: true !default;
+$push_prefix: 'push-' !default; // class prefix to append to push classes
+// create pull classes?
+$create_pull: true !default;
+$pull_prefix: 'pull-' !default;
+
+@function col_width() {
+	// Defining the width of only 1 column
+	@return (100 - (($col_count - 1) * $gutter)) / $col_count;
+}
+
+@function col_gutter_width() {
+	@return col_width() + $gutter;
+}
+
+@function grid_width($grid_num, $nesting: 0, $parent_grid_num: 0) {
+	@if $nesting == 0 {
+		@return ((col_gutter_width() * $grid_num) - $gutter)#{"%"};
+	}
+	@else
+	{
+		$coef : nesting_coef($parent_grid_num, $nesting);
+		@return ((col_gutter_width() * $grid_num) - $gutter) * $coef#{"%"};
+	}
+}
+
+@function grid_margin($grid_num, $nesting: 0, $parent_grid_num: 0) {
+	@if $nesting == 0 {
+		@return $gutter;
+	}
+	@else {
+		$coef : nesting_coef($parent_grid_num, $nesting);
+		@return $gutter * $coef#{"%"};
+	}
+}
+
+@function nesting_coef($parent_grid_num, $nesting) {
+	@return 100 / ((col_gutter_width()  * $parent_grid_num * $nesting) - $gutter);
+}
+
+@mixin nested_grid($grid_num, $nesting: 0) {
+	
+	.#{$class_prefix}#{$grid_num} {
+		$subcols: $grid_num - 1;
+		@for $subcol from 1 through $subcols {
+			@if $nesting == 1 {
+				.#{$class_prefix}#{$subcol} {
+					width: grid_width($subcol, $nesting, $grid_num);
+					margin-right: grid_margin($subcol, $nesting, $grid_num);
+				}
+				
+				@if $create_push {
+					@include push($subcol, $nesting, $grid_num);
+				}
+
+				@if $create_pull {
+					@include pull($subcol, $nesting, $grid_num);
+				}
+				
+			}
+			@else {
+				@include nested_grid($subcol, $nesting - 1);
+			}
+			
+		}
+	}
+}
+
+@mixin pull($grid_num, $nesting: 0, $parent_grid_num: 0) {
+	@if $nesting == 0 {
+		.#{$pull_prefix}#{$grid_num} {
+			margin-left: -(col_gutter_width() * $grid_num)#{"%"};
+			margin-right: (col_gutter_width() * $grid_num) + $gutter#{"%"};
+		}
+	}
+	@else {
+		$coef : nesting_coef($parent_grid_num, $nesting);
+		.#{$pull_prefix}#{$grid_num} {
+			margin-left: -(col_gutter_width() * $grid_num) * $coef#{"%"};
+			margin-right: (col_gutter_width() * $grid_num) * $coef#{"%"};
+		}
+	}
+}
+
+@mixin push($grid_num, $nesting: 0, $parent_grid_num: 0) {
+	@if $nesting == 0 {
+		.#{$push_prefix}#{$grid_num} {
+			margin-left: (col_gutter_width() * $grid_num)#{"%"};
+			margin-right: -(col_gutter_width() * $grid_num) + $gutter#{"%"};
+		}
+	}
+	@else {
+		$coef : nesting_coef($parent_grid_num, $nesting);
+		.#{$push_prefix}#{$grid_num} {
+			margin-left: (col_gutter_width() * $grid_num) * $coef#{"%"};
+			margin-right: -(col_gutter_width() * $grid_num) * $coef#{"%"};
+		}
+	}
+}
+

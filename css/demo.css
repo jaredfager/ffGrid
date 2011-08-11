@@ -1,0 +1,66 @@
+/* This file is only for the demo, none of these styles are required for the grid */
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+body {
+  font: 13px/1.3em "Helvetica Neue", helvetica, Arial, sans-serif;
+  letter-spacing: 0.03em;
+  color:#333;background:#fff;
+  text-align: center;
+  padding: 40px;
+  }
+  
+  .container	{
+  	max-width: 1200px;
+  	margin: 0px auto;
+  	text-align: left;
+  }
+  
+  .grid-1, .grid-2, .grid-3, .grid-4, .grid-5, .grid-6, .grid-7, .grid-8, .grid-9, .grid-10, .grid-11 {
+  	background: #bbb;
+  	margin-bottom: 5px;
+  	border-radius: 5px;
+  }
+  
+  .grid-1 div, .grid-2 div, .grid-3 div, .grid-4 div, .grid-5 div, .grid-6 div, .grid-7 div, .grid-8 div, .grid-9 div, .grid-10 div, .grid-11 div {
+  	background: #666;
+  	margin-bottom: 5px;
+  }
+  
+  .grid-1 div div, .grid-2 div div, .grid-3 div div, .grid-4 div div, .grid-5 div div, .grid-6 div div, .grid-7 div div, .grid-8 div div, .grid-9 div div, .grid-10 div div, .grid-11 div div {
+  	background: #888;
+  	margin-bottom: 5px;
+  }
+
+h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;padding:5px;}
+h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
+h2 {font-size:2em;line-height:1;margin-bottom:0.75em;}
+h3 {font-size:1.5em;line-height:1;margin-bottom:1em;}
+h4 {font-size:1.2em;line-height:1.25;margin-bottom:1.25em;}
+h5 {font-size:1em;font-weight:bold;margin-bottom:15px;}
+h6 {font-size:1em;font-weight:bold;}
+
+p {margin:0 0 1em;}
+a:focus, a:hover {color:#000;}
+a {color:#009;text-decoration:underline;}
+
+strong {font-weight:bold;}
+em, dfn {font-style:italic;}
+
+pre {margin:1.5em 0;white-space:pre;}
+pre, code, tt {font:1em 'andale mono', 'lucida console', monospace;line-height:1.5;}

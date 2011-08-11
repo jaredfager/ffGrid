@@ -1,0 +1,70 @@
+/*Store Startup Fairly Flexible Grid™ CSS Framework -- 
+  Jared Fager, Andrew Schmid and others. Full list of credits will be included in RC.
+  Built with SASS http://sass-lang.com/ */
+
+@import "includes/grid_functions";
+
+$col_count: 12; // the total number of grid columns
+$gutter: 2; // gutter width, in %
+$nesting_level: 0; // number of levels of grid nesting
+$class_prefix: 'grid-'; // grid column class prefix
+
+// create push classes?
+$create_push: false;
+$push_prefix: 'push-'; // class prefix to append to push classes
+
+// create pull classes?
+$create_pull: false;
+$pull_prefix: 'pull-';  // class prefix to append to pull classes
+
+@import 'includes/helpers';
+
+@media only screen and (min-width: 992px) { // feel free to experiment with this value
+	
+	.fluidgrid_defaults { float: left; position: relative; margin-right: $gutter#{"%"}; }
+	@for $grid_num from 1 through ($col_count - 1) {
+	  .#{$class_prefix}#{$grid_num} {
+	    @extend .fluidgrid_defaults;
+	  }
+	}
+	
+	// Style for a full width grid unit
+	.#{$class_prefix}full {width: 100%;float: left;clear: both;}
+	
+	
+
+	// Reset the margin for first and last grid unit
+	.container{
+	  clear: both; position:relative; float:none;
+	  }
+	  .last { margin-right: 0 !important;}
+	  .first { clear: left; }
+	
+	// check if we need to construct nested grid rules
+	@if $nesting_level > 0 {
+		// iterate through each grid column
+		@for $grid_num from 2 through $col_count {
+			// iterate through the number of nesting levels
+			@for $cur_level from 1 through $nesting_level {
+				@include nested_grid($grid_num, $cur_level);
+			}
+		}
+	}
+
+	// first level grid
+	@for $grid_num from 1 through $col_count {  
+	    // Width of the columns in the first level grid
+	    .#{$class_prefix}#{$grid_num} {
+	      width: grid_width($grid_num);
+	    } 
+		
+		@if $create_push {
+			@include push($grid_num);
+		}
+		
+		@if $create_pull {
+			@include pull($grid_num);
+		}
+	}
+	
+}
